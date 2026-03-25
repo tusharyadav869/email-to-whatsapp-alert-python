@@ -25,3 +25,16 @@ for e_id in email_ids:
     print("From: ", sender)
     print("Subject: ", subject)
     print("-"*40)
+
+    body = ""
+
+    if msg.is_multipart():
+        for part in msg.walk():
+            if part.get_content_type() == "text/plain":
+                body = part.get_payload(decode = True).decode(errors = "ignore")
+                break
+    else:
+        body = msg.get_payload(decoode=True).decode(errors = "ignore")
+    
+    print("Body: ", body[:200])
+    print("="*50)
